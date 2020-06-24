@@ -1,0 +1,7 @@
+/* category css part  */
+
+.list {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+}

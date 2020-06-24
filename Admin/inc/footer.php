@@ -43,6 +43,19 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
+<!-- Datatable Javascript CDN  -->
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Custom Javascript Code  -->
+<script src="dist/js/custom/custom.js"></script>
+
+
+<?php
+
+ob_end_flush();
+?>
 </body>
 
 </html>

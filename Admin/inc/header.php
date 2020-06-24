@@ -1,3 +1,14 @@
+<?php
+ob_start();
+
+include("inc/db.inc.php");
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +38,18 @@
     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+
+    <!-- fontawesome 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+        integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" /> -->
+
+    <!-- datatable CSS style sheets -->
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+
+    <!-- custom css stylesheet  -->
+    <link rel="stylesheet" href="dist/css/style.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
