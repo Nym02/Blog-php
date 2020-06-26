@@ -170,8 +170,73 @@
         </div>
     </section>
     <!-- Body content ends  -->
-    <?php } else if ($do == 'Add') {
-    } else if ($do == 'Insert') {
+    <?php } else if ($do == 'Add') { ?>
+
+    <!-- Body content starts  -->
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-primary card-outline">
+                        <div class="card-header ">
+                            <h2 class="card-title">Add New User</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="user.php?do=Insert" method="POST" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label for="fname">Full Name</label>
+                                            <input type="text" class="form-control" name="fullname" id="fname"
+                                                autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="uEmail">Email</label>
+                                            <input type="email" class="form-control" name="email" id="uEmail"
+                                                autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="uname">Username</label>
+                                            <input type="text" class="form-control" name="username" id="uname"
+                                                autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pass">Password</label>
+                                            <input type="password" class="form-control" name="password" id="pass"
+                                                autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="repass">Re-Type Password</label>
+                                            <input type="password" class="form-control" name="Rpassword" id="repass"
+                                                autocomplete="off">
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fname">Full Name</label>
+                                            <input type="text" class="form-control" name="fullname" id="fname"
+                                                autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Body content ends  -->
+    <?php } else if ($do == 'Insert') {
     } else if ($do == 'Edit') {
     } else if ($do == 'Update') {
     } else if ($do == 'Delete') {
