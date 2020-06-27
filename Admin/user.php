@@ -73,6 +73,7 @@
                                             $i = 1;
 
                                             while ($row = mysqli_fetch_assoc($sql)) {
+                                                $id = $row['id'];
                                                 $fullname = $row['fullname'];
                                                 $email = $row['email'];
                                                 $username = $row['username'];
@@ -95,10 +96,12 @@
                                                     alt="<?php echo $fullname ?>" width="35">
 
                                                 <?php } else { ?>
-                                                <img src="image/users/d1.png" alt="<?php echo $fullname ?>" width="35">
+                                                <img src="image/users/default-profile-pic.png"
+                                                    alt="<?php echo $fullname ?>" width="35">
                                                 <?php }
                                                         ?></td>
                                             <td><?php echo $fullname; ?> </td>
+
 
                                             <td><?php echo $email; ?> </td>
                                             <td><?php echo $username; ?> </td>
@@ -119,7 +122,8 @@
                                                 <div class="action-bar">
                                                     <ul class="list">
                                                         <li class="list-item" title="Edit"><a class="list-link"
-                                                                href=""><i class="fa fa-edit text-info"></i></a></li>
+                                                                href="user.php?do=Edit&id=<?php echo $id; ?>"><i
+                                                                    class="fa fa-edit text-info"></i></a></li>
                                                         <li class="list-item"><a href="#" class="list-link"
                                                                 title="Delete" data-toggle="modal" data-target=""><i
                                                                     class="fa fa-trash text-danger"></i></a>
@@ -286,21 +290,186 @@
             if ($password == $rePassword) {
                 $hashedPass = sha1($password);
 
-                $image = rand(0, 500000) . '_' . $avaterName;
-                move_uploaded_file($avaterTmp, "image/users/" . $image);
+                if ($avaterName != NULL) {
+                    $image = rand(0, 500000) . '_' . $avaterName;
+                    move_uploaded_file($avaterTmp, "image/users/" . $image);
 
-                $userInfoQuery = "INSERT INTO users(fullname, email, username, password, phone, address, role, status, image, join_date ) VALUES ('$fullname','$email','$username','$hashedPass','$phone','$address','$role','$status','$image', now()) ";
+                    $userInfoQuery = "INSERT INTO users(fullname, email, username, password, phone, address, role, status, image, join_date ) VALUES ('$fullname','$email','$username','$hashedPass','$phone','$address','$role','$status','$image', now()) ";
 
-                $userInfoSql = mysqli_query($db, $userInfoQuery);
+                    $userInfoSql = mysqli_query($db, $userInfoQuery);
 
-                if ($userInfoSql) {
-                    header("Location: user.php?do=Manage");
+                    if ($userInfoSql) {
+                        header("Location: user.php?do=Manage");
+                    } else {
+                        die("Connection Error" . mysqli_error($db));
+                    }
                 } else {
-                    die("Connection Error" . mysqli_error($db));
+
+
+                    $userInfoQuery = "INSERT INTO users(fullname, email, username, password, phone, address, role, status, image, join_date ) VALUES ('$fullname','$email','$username','$hashedPass','$phone','$address','$role','$status','$image', now()) ";
+
+                    $userInfoSql = mysqli_query($db, $userInfoQuery);
+
+                    if ($userInfoSql) {
+                        header("Location: user.php?do=Manage");
+                    } else {
+                        die("Connection Error" . mysqli_error($db));
+                    }
                 }
-            }
+            } else { ?>
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="alert alert-danger">
+                        Your password does not match with each other. Please enter correct password.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php }
         }
     } else if ($do == 'Edit') {
+
+        if (isset($_GET['id'])) {
+            $editID = $_GET['id'];
+
+            $editQuery = "SELECT * FROM users WHERE id = '$editID'";
+            $editSql = mysqli_query($db, $editQuery);
+
+            while ($row = mysqli_fetch_assoc($editSql)) {
+                $id = $row['id'];
+                $fullname = $row['fullname'];
+                $email = $row['email'];
+                $username = $row['username'];
+                $password = $row['password'];
+                $phone = $row['phone'];
+                $address = $row['address'];
+                $role = $row['role'];
+                $status = $row['status'];
+                $image = $row['image'];
+                $join_date = $row['join_date']; ?>
+    <!-- Body content starts  -->
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-primary card-outline">
+                        <div class="card-header ">
+                            <h2 class="card-title">Edit User</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="user.php?do=Update" method="POST" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label for="fname">Full Name</label>
+                                            <input type="text" class="form-control" name="fullname" id="fname"
+                                                autocomplete="off" value="<?php echo $fullname ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="uEmail">Email</label>
+                                            <input type="email" class="form-control" name="email" id="uEmail"
+                                                autocomplete="off" value="<?php echo $email ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="uname">Username</label>
+                                            <input type="text" class="form-control" name="username" id="uname"
+                                                autocomplete="off" value="<?php echo $username ?>" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pass">Password</label>
+                                            <input type="password" class="form-control" name="password" id="pass"
+                                                autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="repass">Re-Type Password</label>
+                                            <input type="password" class="form-control" name="rePassword" id="repass"
+                                                autocomplete="off">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="uphone">Phone</label>
+                                            <input type="text" class="form-control" name="phone" id="uphone"
+                                                autocomplete="off" value="<?php echo $phone ?>">
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label for="uaddress">Address</label>
+                                            <input type="text" class="form-control" name="address" id="uaddress"
+                                                autocomplete="off" value="<?php echo $address ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="urole">User Role</label>
+                                            <select name="role" id="urole" class="form-control">
+                                                <option value="1" <?php if ($role == 1) {
+                                                                                    echo "selected";
+                                                                                } ?>>Super Admin</option>
+                                                <option value="2" <?php if ($role == 2) {
+                                                                                    echo "selected";
+                                                                                } ?>>Editor</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ustatus">Status</label>
+                                            <select name="status" id="ustatus" class="form-control"
+                                                value="<?php echo $status ?>">
+                                                <option value="1" <?php if ($status == 1) {
+                                                                                    echo "selected";
+                                                                                } ?>>Active</option>
+                                                <option value="0" <?php if ($status == 0) {
+                                                                                    echo "selected";
+                                                                                } ?>>In-Active</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="uimage">Profile Picture</label>
+                                            <?php
+                                                        if (!empty($image)) { ?>
+                                            <img src="image/users/<?php echo $image ?>" alt="<?php echo $fullname; ?>"
+                                                width="35">
+                                            <?php    } else { ?>
+                                            <img src="image/users/d1.png" alt="<?php echo $fullname; ?>" width="35">
+                                            <?php    }
+                                                        ?>
+                                            <input type="file" name="profileImg" id="uimage" class="form-control-file">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" name="updateUserID" value="<?php echo $id; ?>">
+                                            <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser"
+                                                id="" value="Register User">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Body content ends  -->
+
+
+    <?php    }
+        }
     } else if ($do == 'Update') {
     } else if ($do == 'Delete') {
     }
