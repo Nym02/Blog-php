@@ -210,7 +210,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="repass">Re-Type Password</label>
-                                            <input type="password" class="form-control" name="Rpassword" id="repass"
+                                            <input type="password" class="form-control" name="rePassword" id="repass"
+                                                autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="uphone">Phone</label>
+                                            <input type="text" class="form-control" name="phone" id="uphone"
                                                 autocomplete="off">
                                         </div>
 
@@ -218,10 +223,35 @@
 
                                     </div>
                                     <div class="col-md-6">
+
                                         <div class="form-group">
-                                            <label for="fname">Full Name</label>
-                                            <input type="text" class="form-control" name="fullname" id="fname"
+                                            <label for="uaddress">Address</label>
+                                            <input type="text" class="form-control" name="address" id="uaddress"
                                                 autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="urole">User Role</label>
+                                            <select name="role" id="urole" class="form-control">
+                                                <option value="1">Super Admin</option>
+                                                <option value="2">Editor</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ustatus">Status</label>
+                                            <select name="status" id="ustatus" class="form-control">
+                                                <option value="1">Active</option>
+                                                <option value="0">In-Active</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="uimage">Profile Picture</label>
+                                            <input type="file" name="profileImg" id="uimage" class="form-control-file">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser"
+                                                id="" value="Register User">
                                         </div>
                                     </div>
                                 </div>
@@ -237,6 +267,39 @@
     </section>
     <!-- Body content ends  -->
     <?php } else if ($do == 'Insert') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $fullname = $_POST['fullname'];
+            $email = $_POST['email'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $rePassword = $_POST['rePassword'];
+            $phone = $_POST['phone'];
+            $address = $_POST['address'];
+            $role = $_POST['role'];
+            $status = $_POST['status'];
+
+            $avater = $_FILES['profileImg'];
+            $avaterName = $_FILES['profileImg']['name'];
+            $avaterTmp = $_FILES['profileImg']['tmp_name'];
+
+
+            if ($password == $rePassword) {
+                $hashedPass = sha1($password);
+
+                $image = rand(0, 500000) . '_' . $avaterName;
+                move_uploaded_file($avaterTmp, "image/users/" . $image);
+
+                $userInfoQuery = "INSERT INTO users(fullname, email, username, password, phone, address, role, status, image, join_date ) VALUES ('$fullname','$email','$username','$hashedPass','$phone','$address','$role','$status','$image', now()) ";
+
+                $userInfoSql = mysqli_query($db, $userInfoQuery);
+
+                if ($userInfoSql) {
+                    header("Location: user.php?do=Manage");
+                } else {
+                    die("Connection Error" . mysqli_error($db));
+                }
+            }
+        }
     } else if ($do == 'Edit') {
     } else if ($do == 'Update') {
     } else if ($do == 'Delete') {
