@@ -387,12 +387,12 @@
                                         <div class="form-group">
                                             <label for="pass">Password</label>
                                             <input type="password" class="form-control" name="password" id="pass"
-                                                autocomplete="off">
+                                                autocomplete="off" placeholder="Enter New Password">
                                         </div>
                                         <div class="form-group">
                                             <label for="repass">Re-Type Password</label>
                                             <input type="password" class="form-control" name="rePassword" id="repass"
-                                                autocomplete="off">
+                                                autocomplete="off" placeholder="Confirm New Password">
                                         </div>
 
                                         <div class="form-group">
@@ -471,6 +471,107 @@
     <?php    }
         }
     } else if ($do == 'Update') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $updateUserID = $_POST['updateUserID'];
+            $fullname = $_POST['fullname'];
+            $email = $_POST['email'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $rePassword = $_POST['rePassword'];
+            $phone = $_POST['phone'];
+            $address = $_POST['address'];
+            $role = $_POST['role'];
+            $status = $_POST['status'];
+
+            $avater = $_FILES['profileImg'];
+            $avaterName = $_FILES['profileImg']['name'];
+            $avaterTmp = $_FILES['profileImg']['tmp_name'];
+
+
+            if (!empty($password) && !empty($avaterName)) {
+                if ($password == $rePassword) {
+                    $hashedPassword = sha1($password);
+                }
+                $image = rand(0, 500000) . '_' . $avaterName;
+                move_uploaded_file($avaterTmp, "image/users/" . $image);
+
+                //Delete existing image
+                $existingImageQuery = "SELECT * From users WHERE id = 'updateUserID'";
+                $existingImageSql = mysqli_query($db, $existingImageQuery);
+
+                while ($row = mysqli_fetch_assoc($existingImageSql)) {
+                    $existingImage = $row['image'];
+                }
+                unlink("image/users/" . $existingImage);
+
+
+                //updating user info
+
+                $updateQuery = "UPDATE users SET fullname='$fullname', email='$email',password='$hashedPassword', phone='$phone', address='$address', role='$role', status='$status', image='$image' WHERE id = '$updateUserID'";
+
+                $updateSql = mysqli_query($db, $updateQuery);
+
+                if ($updateSql) {
+                    header("Location: user.php?do=Manage");
+                } else {
+                    die("Connection Error" . mysqli_error($db));
+                }
+            } else if (empty($password) && !empty($avaterName)) {
+
+                $image = rand(0, 500000) . '_' . $avaterName;
+                move_uploaded_file($avaterTmp, "image/users/" . $image);
+
+                //Delete existing image
+                $existingImageQuery = "SELECT * From users WHERE id = 'updateUserID'";
+                $existingImageSql = mysqli_query($db, $existingImageQuery);
+
+                while ($row = mysqli_fetch_assoc($existingImageSql)) {
+                    $existingImage = $row['image'];
+                }
+                unlink("image/users/" . $existingImage);
+
+
+                //updating user info
+
+                $updateQuery = "UPDATE users SET fullname='$fullname',email='$email', phone='$phone',address='$address',role='$role',status='$status', image='$image' WHERE id = '$updateUserID'";
+
+                $updateSql = mysqli_query($db, $updateQuery);
+
+                if ($updateSql) {
+                    header("Location: user.php?do=Manage");
+                } else {
+                    die("Connection Error" . mysqli_error($db));
+                }
+            } else if (!empty($password) && empty($avaterName)) {
+                if ($password == $rePassword) {
+                    $hashedPassword = sha1($password);
+                }
+
+                //updating user info
+
+                $updateQuery = "UPDATE users SET fullname='$fullname',email='$email',password='$hashedPassword', phone='$phone',address='$address',role='$role',status='$status' WHERE id = '$updateUserID'";
+
+                $updateSql = mysqli_query($db, $updateQuery);
+
+                if ($updateSql) {
+                    header("Location: user.php?do=Manage");
+                } else {
+                    die("Connection Error" . mysqli_error($db));
+                }
+            } else {
+                //updating user info
+
+                $updateQuery = "UPDATE users SET fullname='$fullname',email='$email', phone='$phone',address='$address',role='$role',status='$status' WHERE id = '$updateUserID'";
+
+                $updateSql = mysqli_query($db, $updateQuery);
+
+                if ($updateSql) {
+                    header("Location: user.php?do=Manage");
+                } else {
+                    die("Connection Error" . mysqli_error($db));
+                }
+            }
+        }
     } else if ($do == 'Delete') {
     }
 
