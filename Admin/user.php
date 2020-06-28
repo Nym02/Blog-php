@@ -124,8 +124,9 @@
                                                         <li class="list-item" title="Edit"><a class="list-link"
                                                                 href="user.php?do=Edit&id=<?php echo $id; ?>"><i
                                                                     class="fa fa-edit text-info"></i></a></li>
-                                                        <li class="list-item"><a href="#" class="list-link"
-                                                                title="Delete" data-toggle="modal" data-target=""><i
+                                                        <li class="list-item"><a href="#delete<?php echo $id; ?>"
+                                                                class="list-link" title="Delete" data-toggle="modal"
+                                                                data-target=""><i
                                                                     class="fa fa-trash text-danger"></i></a>
                                                         </li>
                                                     </ul>
@@ -136,12 +137,14 @@
 
                                         <?php $i++;
                                             } ?>
-                                        <div class="modal fade" id="" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="delete<?php echo $id; ?>" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Are you sure?
+                                                        <h5 class="modal-title" id="exampleModalLabel">Do you want to
+                                                            delete this user?
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
@@ -150,7 +153,8 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="btn-group">
-                                                            <a href="" class="btn btn-danger">Yes</a>
+                                                            <a href="user.php?do=Delete&id=<?php echo $id; ?>"
+                                                                class="btn btn-danger">Yes</a>
                                                             <a href="#" data-dismiss="modal" aria-label="Close"
                                                                 class="btn btn-success">No</a>
                                                         </div>
@@ -522,7 +526,7 @@
                 move_uploaded_file($avaterTmp, "image/users/" . $image);
 
                 //Delete existing image
-                $existingImageQuery = "SELECT * From users WHERE id = 'updateUserID'";
+                $existingImageQuery = "SELECT * From users WHERE id = '$updateUserID'";
                 $existingImageSql = mysqli_query($db, $existingImageQuery);
 
                 while ($row = mysqli_fetch_assoc($existingImageSql)) {
@@ -573,6 +577,27 @@
             }
         }
     } else if ($do == 'Delete') {
+        if (isset($_GET['id'])) {
+            $delete_user_id = $_GET['id'];
+
+            //Delete existing image
+            $existingImageQuery = "SELECT * From users WHERE id = '$delete_user_id'";
+            $existingImageSql = mysqli_query($db, $existingImageQuery);
+
+            while ($row = mysqli_fetch_assoc($existingImageSql)) {
+                $existingImage = $row['image'];
+            }
+            unlink("image/users/" . $existingImage);
+
+            $deleteQuery = "DELETE from users where id = '$delete_user_id'";
+            $deleteSql = mysqli_query($db, $deleteQuery);
+
+            if ($deleteSql) {
+                header("Location: user.php?do=Manage");
+            } else {
+                die("Connection Error" . mysqli_error($db));
+            }
+        }
     }
 
     ?>
