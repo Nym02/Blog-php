@@ -1,3 +1,10 @@
+<?php
+include("inc/db.inc.php");
+ob_start();
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +14,7 @@
     <title>AdminLTE 3 | Log in</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- icheck bootstrap -->
@@ -20,16 +26,16 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="dashboard.php"><b>Admin</b>LTE</a>
+            <a href=""><b>Admin </b>Login</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="dashboard.php" method="post">
+                <form action="" method="post">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" class="form-control" name="email" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -37,7 +43,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -55,11 +61,53 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <input type="submit" class="btn btn-primary btn-block" name="login" value="Sign In">
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
+
+                <?php
+
+                if (isset($_POST['login'])) {
+                    $email = mysqli_real_escape_string($db, $_POST['email']);
+                    $password = mysqli_real_escape_string($db, $_POST['password']);
+
+
+                    $hashedPass = sha1($password);
+
+
+                    //fetching this.user information from database
+
+                    $loginUserQuery = "SELECT * from users WHERE email = '$email'";
+                    $loginUserSql = mysqli_query($db, $loginUserQuery);
+
+
+                    while ($row = mysqli_fetch_array($loginUserSql)) {
+                        $_SESSION['id']             = $row['id'];
+                        $_SESSION['fullname']       = $row['fullname'];
+                        $_SESSION['email']          = $row['email'];
+                        $_SESSION['username']       = $row['username'];
+                        $password                   = $row['password'];
+                        $_SESSION['phone']          = $row['phone'];
+                        $_SESSION['address']        = $row['address'];
+                        $_SESSION['role']           = $row['role'];
+                        $_SESSION['status']         = $row['status'];
+                        $_SESSION['image']          = $row['image'];
+                        $_SESSION['join_date']      = $row['join_date'];
+
+                        if ($email == $_SESSION['email'] && $hashedPass == $password && $_SESSION['status'] == 1) {
+                            header("Location: dashboard.php");
+                        } else if ($email != $_SESSION['email'] || $hashedPass != $password) {
+                            header("Location: index.php");
+                        } else {
+                            header("Location: index.php");
+                        }
+                    }
+                }
+
+
+                ?>
 
                 <div class="social-auth-links text-center mb-3">
                     <p>- OR -</p>
@@ -90,7 +138,10 @@
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
+    <?php
+    ob_end_flush();
 
+    ?>
 </body>
 
 </html>

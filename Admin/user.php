@@ -30,43 +30,42 @@
     $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
 
     if ($do == 'Manage') { ?>
-    <!-- Body content starts  -->
-    <section class="content">
-        <div class="container-fluid">
+        <!-- Body content starts  -->
+        <section class="content">
+            <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
 
-                    <div class="card card-primary card-outline">
-                        <div class="card-header ">
-                            <h2 class="card-title">Manage Users</h2>
-                        </div>
-                        <div class="card-body">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header ">
+                                <h2 class="card-title">Manage Users</h2>
+                            </div>
+                            <div class="card-body">
 
-                            <div class="p-3">
-                                <table id="example" class="table table-striped table-responsive table-bordered p-3"
-                                    style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#SL.</th>
-                                            <th>Image</th>
-                                            <th>Full Name</th>
-                                            <th>Email</th>
-                                            <th>Username</th>
+                                <div class="p-3 table-responsive">
+                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#SL.</th>
+                                                <th>Image</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Username</th>
 
-                                            <th>Phone</th>
-                                            <th>Address</th>
-                                            <th>Role</th>
-                                            <th>Status</th>
+                                                <th>Phone</th>
+                                                <th>Address</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
 
-                                            <th>Join Date</th>
-                                            <th>Action</th>
+                                                <th>Join Date</th>
+                                                <th>Action</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        <?php
+                                            <?php
 
                                             $query = "SELECT * FROM users";
                                             $sql = mysqli_query($db, $query);
@@ -88,193 +87,174 @@
 
                                             ?>
 
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php
+                                                <tr>
+                                                    <td><?php echo $i; ?></td>
+                                                    <td><?php
                                                         if (!empty($image)) { ?>
-                                                <img src="image/users/<?php echo $image ?>"
-                                                    alt="<?php echo $fullname ?>" width="35">
+                                                            <img src="image/users/<?php echo $image ?>" alt="<?php echo $fullname ?>" width="35">
 
-                                                <?php } else { ?>
-                                                <img src="image/users/default-profile-pic.png"
-                                                    alt="<?php echo $fullname ?>" width="35">
-                                                <?php }
+                                                        <?php } else { ?>
+                                                            <img src="image/users/default-profile-pic.png" alt="<?php echo $fullname ?>" width="35">
+                                                        <?php }
                                                         ?></td>
-                                            <td><?php echo $fullname; ?> </td>
+                                                    <td><?php echo $fullname; ?> </td>
 
 
-                                            <td><?php echo $email; ?> </td>
-                                            <td><?php echo $username; ?> </td>
-                                            <td><?php echo $phone; ?> </td>
-                                            <td><?php echo $address; ?> </td>
-                                            <td><?php if ($role == 1) { ?>
-                                                <span class="badge badge-primary">Admin</span>
-                                                <?php } else if ($role == 2) { ?>
-                                                <span class="badge badge-info">Editor</span>
-                                                <?php } ?> </td>
-                                            <td><?php if ($status == 1) { ?>
-                                                <span class="badge badge-success">Active</span>
-                                                <?php  } else if ($status == 0) { ?>
-                                                <span class="badge badge-danger">In-Active</span>
-                                                <?php } ?> </td>
-                                            <td><?php echo $join_date; ?> </td>
-                                            <td>
-                                                <div class="action-bar">
-                                                    <ul class="list">
-                                                        <li class="list-item" title="Edit"><a class="list-link"
-                                                                href="user.php?do=Edit&id=<?php echo $id; ?>"><i
-                                                                    class="fa fa-edit text-info"></i></a></li>
-                                                        <li class="list-item"><a href="#delete<?php echo $id; ?>"
-                                                                class="list-link" title="Delete" data-toggle="modal"
-                                                                data-target=""><i
-                                                                    class="fa fa-trash text-danger"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-
-                                        <?php $i++;
-                                            } ?>
-                                        <!-- Delete Modal -->
-                                        <div class="modal fade" id="delete<?php echo $id; ?>" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Do you want to
-                                                            delete this user?
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="btn-group">
-                                                            <a href="user.php?do=Delete&id=<?php echo $id; ?>"
-                                                                class="btn btn-danger">Yes</a>
-                                                            <a href="#" data-dismiss="modal" aria-label="Close"
-                                                                class="btn btn-success">No</a>
+                                                    <td><?php echo $email; ?> </td>
+                                                    <td><?php echo $username; ?> </td>
+                                                    <td><?php echo $phone; ?> </td>
+                                                    <td><?php echo $address; ?> </td>
+                                                    <td><?php if ($role == 1) { ?>
+                                                            <span class="badge badge-primary">Admin</span>
+                                                        <?php } else if ($role == 2) { ?>
+                                                            <span class="badge badge-info">Editor</span>
+                                                        <?php } ?> </td>
+                                                    <td><?php if ($status == 1) { ?>
+                                                            <span class="badge badge-success">Active</span>
+                                                        <?php  } else if ($status == 0) { ?>
+                                                            <span class="badge badge-danger">In-Active</span>
+                                                        <?php } ?> </td>
+                                                    <td><?php echo $join_date; ?> </td>
+                                                    <td>
+                                                        <div class="action-bar">
+                                                            <ul class="list">
+                                                                <li class="list-item" title="Edit"><a class="list-link" href="user.php?do=Edit&id=<?php echo $id; ?>"><i class="fa fa-edit text-info"></i></a></li>
+                                                                <li class="list-item"><a href="#delete<?php echo $id; ?>" class="list-link" title="Delete" data-toggle="modal" data-target=""><i class="fa fa-trash text-danger"></i></a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
-                                                    </div>
+                                                    </td>
 
+                                                </tr>
+
+                                            <?php $i++;
+                                            } ?>
+                                            <!-- Delete Modal -->
+                                            <div class="modal fade" id="delete<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Do you want to
+                                                                delete this user?
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="btn-group">
+                                                                <a href="user.php?do=Delete&id=<?php echo $id; ?>" class="btn btn-danger">Yes</a>
+                                                                <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-success">No</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
-                                    </tbody>
+                                        </tbody>
 
-                                </table>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Body content ends  -->
-    <?php } else if ($do == 'Add') { ?>
-
-    <!-- Body content starts  -->
-    <section class="content">
-        <div class="container-fluid">
-
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="card card-primary card-outline">
-                        <div class="card-header ">
-                            <h2 class="card-title">Add New User</h2>
-                        </div>
-                        <div class="card-body">
-                            <form action="user.php?do=Insert" method="POST" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label for="fname">Full Name</label>
-                                            <input type="text" class="form-control" name="fullname" id="fname"
-                                                autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uEmail">Email</label>
-                                            <input type="email" class="form-control" name="email" id="uEmail"
-                                                autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uname">Username</label>
-                                            <input type="text" class="form-control" name="username" id="uname"
-                                                autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pass">Password</label>
-                                            <input type="password" class="form-control" name="password" id="pass"
-                                                autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="repass">Re-Type Password</label>
-                                            <input type="password" class="form-control" name="rePassword" id="repass"
-                                                autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uphone">Phone</label>
-                                            <input type="text" class="form-control" name="phone" id="uphone"
-                                                autocomplete="off">
-                                        </div>
-
-
-
-                                    </div>
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label for="uaddress">Address</label>
-                                            <input type="text" class="form-control" name="address" id="uaddress"
-                                                autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="urole">User Role</label>
-                                            <select name="role" id="urole" class="form-control">
-                                                <option value="1">Super Admin</option>
-                                                <option value="2">Editor</option>
-                                            </select>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="ustatus">Status</label>
-                                            <select name="status" id="ustatus" class="form-control">
-                                                <option value="1">Active</option>
-                                                <option value="0">In-Active</option>
-                                            </select>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uimage">Profile Picture</label>
-                                            <input type="file" name="profileImg" id="uimage" class="form-control-file">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser"
-                                                id="" value="Register User">
-                                        </div>
-                                    </div>
+                                    </table>
                                 </div>
 
-                            </form>
-
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- Body content ends  -->
-    <?php } else if ($do == 'Insert') {
+        </section>
+        <!-- Body content ends  -->
+    <?php } else if ($do == 'Add') { ?>
+
+        <!-- Body content starts  -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card card-primary card-outline">
+                            <div class="card-header ">
+                                <h2 class="card-title">Add New User</h2>
+                            </div>
+                            <div class="card-body">
+                                <form action="user.php?do=Insert" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                            <div class="form-group">
+                                                <label for="fname">Full Name</label>
+                                                <input type="text" class="form-control" name="fullname" id="fname" autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="uEmail">Email</label>
+                                                <input type="email" class="form-control" name="email" id="uEmail" autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="uname">Username</label>
+                                                <input type="text" class="form-control" name="username" id="uname" autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pass">Password</label>
+                                                <input type="password" class="form-control" name="password" id="pass" autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="repass">Re-Type Password</label>
+                                                <input type="password" class="form-control" name="rePassword" id="repass" autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="uphone">Phone</label>
+                                                <input type="text" class="form-control" name="phone" id="uphone" autocomplete="off">
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="form-group">
+                                                <label for="uaddress">Address</label>
+                                                <input type="text" class="form-control" name="address" id="uaddress" autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="urole">User Role</label>
+                                                <select name="role" id="urole" class="form-control">
+                                                    <option value="1">Super Admin</option>
+                                                    <option value="2">Editor</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ustatus">Status</label>
+                                                <select name="status" id="ustatus" class="form-control">
+                                                    <option value="1">Active</option>
+                                                    <option value="0">In-Active</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="uimage">Profile Picture</label>
+                                                <input type="file" name="profileImg" id="uimage" class="form-control-file">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser" id="" value="Register User">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Body content ends  -->
+        <?php } else if ($do == 'Insert') {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $fullname = $_POST['fullname'];
             $email = $_POST['email'];
@@ -321,21 +301,21 @@
                     }
                 }
             } else { ?>
-    <section class="content">
-        <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
 
-                    <div class="alert alert-danger">
-                        Your password does not match with each other. Please enter correct password.
+                                <div class="alert alert-danger">
+                                    Your password does not match with each other. Please enter correct password.
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <?php }
+                </section>
+            <?php }
         }
     } else if ($do == 'Edit') {
 
@@ -357,119 +337,109 @@
                 $status = $row['status'];
                 $image = $row['image'];
                 $join_date = $row['join_date']; ?>
-    <!-- Body content starts  -->
-    <section class="content">
-        <div class="container-fluid">
+                <!-- Body content starts  -->
+                <section class="content">
+                    <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
 
-                    <div class="card card-primary card-outline">
-                        <div class="card-header ">
-                            <h2 class="card-title">Edit User</h2>
-                        </div>
-                        <div class="card-body">
-                            <form action="user.php?do=Update" method="POST" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label for="fname">Full Name</label>
-                                            <input type="text" class="form-control" name="fullname" id="fname"
-                                                autocomplete="off" value="<?php echo $fullname ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uEmail">Email</label>
-                                            <input type="email" class="form-control" name="email" id="uEmail"
-                                                autocomplete="off" value="<?php echo $email ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uname">Username</label>
-                                            <input type="text" class="form-control" name="username" id="uname"
-                                                autocomplete="off" value="<?php echo $username ?>" disabled>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pass">Password</label>
-                                            <input type="password" class="form-control" name="password" id="pass"
-                                                autocomplete="off" placeholder="Enter New Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="repass">Re-Type Password</label>
-                                            <input type="password" class="form-control" name="rePassword" id="repass"
-                                                autocomplete="off" placeholder="Confirm New Password">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="uphone">Phone</label>
-                                            <input type="text" class="form-control" name="phone" id="uphone"
-                                                autocomplete="off" value="<?php echo $phone ?>">
-                                        </div>
-
-
-
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header ">
+                                        <h2 class="card-title">Edit User</h2>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="card-body">
+                                        <form action="user.php?do=Update" method="POST" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-md-6">
 
-                                        <div class="form-group">
-                                            <label for="uaddress">Address</label>
-                                            <input type="text" class="form-control" name="address" id="uaddress"
-                                                autocomplete="off" value="<?php echo $address ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="urole">User Role</label>
-                                            <select name="role" id="urole" class="form-control">
-                                                <option value="1" <?php if ($role == 1) {
+                                                    <div class="form-group">
+                                                        <label for="fname">Full Name</label>
+                                                        <input type="text" class="form-control" name="fullname" id="fname" autocomplete="off" value="<?php echo $fullname ?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="uEmail">Email</label>
+                                                        <input type="email" class="form-control" name="email" id="uEmail" autocomplete="off" value="<?php echo $email ?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="uname">Username</label>
+                                                        <input type="text" class="form-control" name="username" id="uname" autocomplete="off" value="<?php echo $username ?>" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pass">Password</label>
+                                                        <input type="password" class="form-control" name="password" id="pass" autocomplete="off" placeholder="Enter New Password">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="repass">Re-Type Password</label>
+                                                        <input type="password" class="form-control" name="rePassword" id="repass" autocomplete="off" placeholder="Confirm New Password">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="uphone">Phone</label>
+                                                        <input type="text" class="form-control" name="phone" id="uphone" autocomplete="off" value="<?php echo $phone ?>">
+                                                    </div>
+
+
+
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group">
+                                                        <label for="uaddress">Address</label>
+                                                        <input type="text" class="form-control" name="address" id="uaddress" autocomplete="off" value="<?php echo $address ?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="urole">User Role</label>
+                                                        <select name="role" id="urole" class="form-control">
+                                                            <option value="1" <?php if ($role == 1) {
                                                                                     echo "selected";
                                                                                 } ?>>Super Admin</option>
-                                                <option value="2" <?php if ($role == 2) {
+                                                            <option value="2" <?php if ($role == 2) {
                                                                                     echo "selected";
                                                                                 } ?>>Editor</option>
-                                            </select>
+                                                        </select>
 
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="ustatus">Status</label>
-                                            <select name="status" id="ustatus" class="form-control"
-                                                value="<?php echo $status ?>">
-                                                <option value="1" <?php if ($status == 1) {
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ustatus">Status</label>
+                                                        <select name="status" id="ustatus" class="form-control" value="<?php echo $status ?>">
+                                                            <option value="1" <?php if ($status == 1) {
                                                                                     echo "selected";
                                                                                 } ?>>Active</option>
-                                                <option value="0" <?php if ($status == 0) {
+                                                            <option value="0" <?php if ($status == 0) {
                                                                                     echo "selected";
                                                                                 } ?>>In-Active</option>
-                                            </select>
+                                                        </select>
 
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uimage">Profile Picture</label>
-                                            <?php
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="uimage">Profile Picture</label>
+                                                        <?php
                                                         if (!empty($image)) { ?>
-                                            <img src="image/users/<?php echo $image ?>" alt="<?php echo $fullname; ?>"
-                                                width="35">
-                                            <?php    } else { ?>
-                                            <img src="image/users/d1.png" alt="<?php echo $fullname; ?>" width="35">
-                                            <?php    }
+                                                            <img src="image/users/<?php echo $image ?>" alt="<?php echo $fullname; ?>" width="35">
+                                                        <?php    } else { ?>
+                                                            <img src="image/users/d1.png" alt="<?php echo $fullname; ?>" width="35">
+                                                        <?php    }
                                                         ?>
-                                            <input type="file" name="profileImg" id="uimage" class="form-control-file">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="hidden" name="updateUserID" value="<?php echo $id; ?>">
-                                            <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser"
-                                                id="" value="Register User">
-                                        </div>
+                                                        <input type="file" name="profileImg" id="uimage" class="form-control-file">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="updateUserID" value="<?php echo $id; ?>">
+                                                        <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser" id="" value="Register User">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
                                     </div>
                                 </div>
 
-                            </form>
-
+                            </div>
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Body content ends  -->
+                </section>
+                <!-- Body content ends  -->
 
 
     <?php    }

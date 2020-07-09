@@ -1,10 +1,9 @@
 <?php
 
-$db = mysqli_connect("localhost","root","","blog");
+$db = mysqli_connect("localhost", "root", "", "blog-php");
 
 
-if($db){
-
+if ($db) {
 } else {
-    die("Connection Error". mysqli_error($db));
+    die("Connection Error" . mysqli_error($db));
 }
