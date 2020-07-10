@@ -88,7 +88,7 @@ session_start();
                         $_SESSION['fullname']       = $row['fullname'];
                         $_SESSION['email']          = $row['email'];
                         $_SESSION['username']       = $row['username'];
-                        $password                   = $row['password'];
+                        $_SESSION['password']      = $row['password'];
                         $_SESSION['phone']          = $row['phone'];
                         $_SESSION['address']        = $row['address'];
                         $_SESSION['role']           = $row['role'];
@@ -96,9 +96,9 @@ session_start();
                         $_SESSION['image']          = $row['image'];
                         $_SESSION['join_date']      = $row['join_date'];
 
-                        if ($email == $_SESSION['email'] && $hashedPass == $password && $_SESSION['status'] == 1) {
+                        if ($email == $_SESSION['email'] && $hashedPass == $_SESSION['password'] && $_SESSION['status'] == 1) {
                             header("Location: dashboard.php");
-                        } else if ($email != $_SESSION['email'] || $hashedPass != $password) {
+                        } else if ($email != $_SESSION['email'] || $hashedPass != $_SESSION['password']) {
                             header("Location: index.php");
                         } else {
                             header("Location: index.php");

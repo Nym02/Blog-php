@@ -14,7 +14,7 @@
                 <img src="image/users/<?php echo $_SESSION['image']; ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="dashboard.php" class="d-block"><?php echo $_SESSION['fullname']; ?></a>
+                <a href="profile.php" class="d-block"><?php echo $_SESSION['fullname']; ?></a>
             </div>
         </div>
 
@@ -33,6 +33,34 @@
                     </a>
 
                 </li>
+                <?php
+                if ($_SESSION['role'] == 2) { ?>
+                    <!-- Editor Profile Section Starts  -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                                Profile
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="profile.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Manage Profile</p>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <!-- Editor Profile Section Ends  -->
+
+                <?php }
+
+
+                ?>
                 <!-- Category Section Starts  -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -54,32 +82,40 @@
                     </ul>
                 </li>
                 <!-- Category Section Ends  -->
-                <!-- Mange Users Section Starts  -->
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tree"></i>
-                        <p>
-                            Users
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="user.php?do=Manage" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Manage Users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="user.php?do=Add" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Add New Users</p>
-                            </a>
-                        </li>
 
-                    </ul>
-                </li>
-                <!-- Manage Users Section Ends  -->
+
+                <?php
+                if ($_SESSION['role'] == 1) { ?>
+                    <!-- Mange Users Section Starts  -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                                Users
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="user.php?do=Manage" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Manage Users</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="user.php?do=Add" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New Users</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <!-- Manage Users Section Ends  -->
+
+                <?php }
+                ?>
+
                 <!-- Mange Post Section Starts  -->
                 <li class="nav-item has-treeview">
                     <a href="post.php" class="nav-link">
@@ -132,33 +168,36 @@
                     </ul>
                 </li>
                 <!-- Manage Comment Section Ends  -->
-                <!-- Website Setting Section Starts  -->
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tree"></i>
-                        <p>
-                            Platform Setting
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="pages/UI/general.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Social Media</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/UI/icons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>General Setting</p>
-                            </a>
-                        </li>
+                <?php
+                if ($_SESSION['role'] == 1) { ?>
+                    <!-- Website Setting Section Starts  -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                                Platform Setting
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="pages/UI/general.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Social Media</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="pages/UI/icons.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>General Setting</p>
+                                </a>
+                            </li>
 
-                    </ul>
-                </li>
-                <!-- Website Setting Section Ends   -->
-
+                        </ul>
+                    </li>
+                    <!-- Website Setting Section Ends   -->
+                <?php }
+                ?>
 
                 <!-- Logout Section Starts  -->
                 <li class="nav-item has-treeview">

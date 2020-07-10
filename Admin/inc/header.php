@@ -5,6 +5,10 @@ include("inc/db.inc.php");
 ob_start();
 session_start();
 
+if (empty($_SESSION['email'])  || empty($_SESSION['password'])) {
+    header("Location: index.php");
+}
+
 
 
 ?>
