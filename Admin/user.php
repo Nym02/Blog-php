@@ -67,7 +67,7 @@
 
                                                 <?php
 
-                                                $query = "SELECT * FROM users";
+                                                $query = "SELECT * FROM users order by id desc";
                                                 $sql = mysqli_query($db, $query);
                                                 $i = 1;
 
@@ -425,7 +425,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <input type="hidden" name="updateUserID" value="<?php echo $id; ?>">
-                                                            <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser" id="" value="Register User">
+                                                            <input type="submit" class="btn bg-gradient-primary btn-flat" name="addUser" id="" value="Update User">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -446,20 +446,20 @@
             }
         } else if ($do == 'Update') {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $updateUserID = $_POST['updateUserID'];
-                $fullname = $_POST['fullname'];
-                $email = $_POST['email'];
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $rePassword = $_POST['rePassword'];
-                $phone = $_POST['phone'];
-                $address = $_POST['address'];
-                $role = $_POST['role'];
-                $status = $_POST['status'];
+                $updateUserID           = $_POST['updateUserID'];
+                $fullname               = $_POST['fullname'];
+                $email                  = $_POST['email'];
+                $username               = $_POST['username'];
+                $password               = $_POST['password'];
+                $rePassword             = $_POST['rePassword'];
+                $phone                  = $_POST['phone'];
+                $address                = $_POST['address'];
+                $role                   = $_POST['role'];
+                $status                 = $_POST['status'];
 
-                $avater = $_FILES['profileImg'];
-                $avaterName = $_FILES['profileImg']['name'];
-                $avaterTmp = $_FILES['profileImg']['tmp_name'];
+                $avater                 = $_FILES['profileImg'];
+                $avaterName             = $_FILES['profileImg']['name'];
+                $avaterTmp              = $_FILES['profileImg']['tmp_name'];
 
 
                 if (!empty($password) && !empty($avaterName)) {

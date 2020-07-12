@@ -88,7 +88,7 @@ session_start();
                         $_SESSION['fullname']       = $row['fullname'];
                         $_SESSION['email']          = $row['email'];
                         $_SESSION['username']       = $row['username'];
-                        $_SESSION['password']      = $row['password'];
+                        $_SESSION['password']       = $row['password'];
                         $_SESSION['phone']          = $row['phone'];
                         $_SESSION['address']        = $row['address'];
                         $_SESSION['role']           = $row['role'];

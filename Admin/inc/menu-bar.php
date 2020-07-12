@@ -1,9 +1,17 @@
+<?php
+if (isset($_SESSION['fullname']) && isset($_SESSION['image'])) {
+    $fullname = $_SESSION['fullname'];
+    $img = $_SESSION['image'];
+}
+
+?>
+
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="dashboard.php" class="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Admin</span>
     </a>
 
     <!-- Sidebar -->
@@ -11,10 +19,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="image/users/<?php echo $_SESSION['image']; ?>" class="img-circle elevation-2" alt="User Image">
+                <img src="image/users/<?php echo $img; ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="profile.php" class="d-block"><?php echo $_SESSION['fullname']; ?></a>
+                <a href="profile.php" class="d-block"><?php echo $fullname; ?></a>
             </div>
         </div>
 
@@ -127,13 +135,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="post.php" class="nav-link">
+                            <a href="post.php?do=Manage" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Manage Post</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="post.php" class="nav-link">
+                            <a href="post.php?do=Add" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add New Post</p>
                             </a>

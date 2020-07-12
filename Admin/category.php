@@ -39,7 +39,7 @@
                             <form action="" method="POST">
                                 <div class="form-group">
                                     <label for="catName">Category Name</label>
-                                    <input type="text" class="form-control" name="cat_name" id="catName" required>
+                                    <input type="text" class="form-control" name="cat_name" id="catName" required autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label for="catDes">Category Description</label>
@@ -96,40 +96,38 @@
 
 
                     ?>
-                    <div class="card card-primary card-outline">
-                        <div class="card-header ">
-                            <h2 class="card-title">Update Category Info</h2>
-                        </div>
-                        <div class="card-body">
-                            <!-- Add new category form  -->
-
-                            <form action="" method="POST">
-                                <div class="form-group">
-                                    <label for="catName">Category Name</label>
-                                    <input type="text" class="form-control" name="cat_name" id="catName"
-                                        value="<?php echo $cat_name; ?>" required>
+                            <div class="card card-primary card-outline">
+                                <div class="card-header ">
+                                    <h2 class="card-title">Update Category Info</h2>
                                 </div>
-                                <div class="form-group">
-                                    <label for="catDes">Category Description</label>
-                                    <textarea class="form-control" name="cat_des" id="catDes"
-                                        rows="4"><?php echo $cat_des; ?> </textarea>
+                                <div class="card-body">
+                                    <!-- Add new category form  -->
+
+                                    <form action="" method="POST">
+                                        <div class="form-group">
+                                            <label for="catName">Category Name</label>
+                                            <input type="text" class="form-control" name="cat_name" id="catName" value="<?php echo $cat_name; ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="catDes">Category Description</label>
+                                            <textarea class="form-control" name="cat_des" id="catDes" rows="4"><?php echo $cat_des; ?> </textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="catStatus">Category Status</label>
+                                            <select name="cat_status" id="catStatus" class="form-control">
+                                                <option value="1" <?php if ($cat_status == 1) echo "selected" ?>>Active</option>
+                                                <option value="0" <?php if ($cat_status == 0) echo "selected" ?>>In-Active
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" name="update_cat" value="Update">
+
+                                    </form>
+
+
+
                                 </div>
-                                <div class="form-group">
-                                    <label for="catStatus">Category Status</label>
-                                    <select name="cat_status" id="catStatus" class="form-control">
-                                        <option value="1" <?php if ($cat_status == 1) echo "selected" ?>>Active</option>
-                                        <option value="0" <?php if ($cat_status == 0) echo "selected" ?>>In-Active
-                                        </option>
-                                    </select>
-                                </div>
-                                <input type="submit" class="btn btn-primary" name="update_cat" value="Update">
-
-                            </form>
-
-
-
-                        </div>
-                    </div>
+                            </div>
                     <?php }
                         if (isset($_POST['update_cat'])) {
                             $cat_name = $_POST['cat_name'];
@@ -164,7 +162,7 @@
 
 
                             <?php
-                            $query = "SELECT * FROM category";
+                            $query = "SELECT * FROM category  order by cat_name asc";
                             $sql = mysqli_query($db, $query);
                             $total_cat = mysqli_num_rows($sql);
                             $i = 1;
@@ -172,20 +170,20 @@
                             if ($total_cat == 0) {
                                 echo "No Category Found";
                             } else { ?>
-                            <table id="example" class="table table-striped table-bordered p-3" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>#SL.</th>
-                                        <th>Category Name</th>
-                                        <th>Category Status</th>
-                                        <th>Action</th>
+                                <table id="example" class="table table-striped table-bordered p-3" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>#SL.</th>
+                                            <th>Category Name</th>
+                                            <th>Category Status</th>
+                                            <th>Action</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
 
-                                    <?php while ($row = mysqli_fetch_assoc($sql)) {
+                                        <?php while ($row = mysqli_fetch_assoc($sql)) {
                                             $cat_id = $row['cat_id'];
                                             $cat_name = $row['cat_name'];
                                             $cat_des = $row['cat_des'];
@@ -194,62 +192,53 @@
 
 
                                         ?>
-                                    <tr>
-                                        <td><?php echo $i; ?></td>
-                                        <td><?php echo $cat_name; ?></td>
-                                        <td><?php
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
+                                                <td><?php echo $cat_name; ?></td>
+                                                <td><?php
                                                     if ($cat_status == 1) { ?>
-                                            <span class="badge badge-success">Active</span>
-                                            <?php } else { ?>
-                                            <span class="badge badge-danger">In-Active</span>
-                                            <?php } ?>
+                                                        <span class="badge badge-success">Active</span>
+                                                    <?php } else { ?>
+                                                        <span class="badge badge-danger">In-Active</span>
+                                                    <?php } ?>
 
-                                        </td>
-                                        <td>
-                                            <div class="action-bar">
-                                                <ul class="list">
-                                                    <li class="list-item" title="Edit"><a class="list-link"
-                                                            href="category.php?edit=<?php echo $cat_id ?>"><i
-                                                                class="fa fa-edit text-info"></i></a></li>
-                                                    <li class="list-item"><a href="#" class="list-link" title="Delete"
-                                                            data-toggle="modal"
-                                                            data-target="#delete<?php echo $cat_id; ?>"><i
-                                                                class="fa fa-trash text-danger"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
+                                                </td>
+                                                <td>
+                                                    <div class="action-bar">
+                                                        <ul class="list">
+                                                            <li class="list-item" title="Edit"><a class="list-link" href="category.php?edit=<?php echo $cat_id ?>"><i class="fa fa-edit text-info"></i></a></li>
+                                                            <li class="list-item"><a href="#" class="list-link" title="Delete" data-toggle="modal" data-target="#delete<?php echo $cat_id; ?>"><i class="fa fa-trash text-danger"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
 
-                                    </tr>
-                                    <div class="modal fade" id="delete<?php echo $cat_id ?>" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure? </h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="btn-group">
-                                                        <a href="category.php?delete=<?php echo $cat_id; ?>"
-                                                            class="btn btn-danger">Yes</a>
-                                                        <a href="#" data-dismiss="modal" aria-label="Close"
-                                                            class="btn btn-success">No</a>
+                                            </tr>
+                                            <div class="modal fade" id="delete<?php echo $cat_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure? </h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="btn-group">
+                                                                <a href="category.php?delete=<?php echo $cat_id; ?>" class="btn btn-danger">Yes</a>
+                                                                <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-success">No</a>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
-
                                             </div>
-                                        </div>
-                                    </div>
-                                    <?php $i++;
+                                        <?php $i++;
                                         } ?>
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
+                                </table>
                             <?php      } ?>
 
                         </div>

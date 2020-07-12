@@ -82,6 +82,10 @@
                                             <td><?php echo $fullname; ?></td>
                                         </tr>
                                         <tr>
+                                            <th scope="row">Email</th>
+                                            <td><?php echo $email; ?></td>
+                                        </tr>
+                                        <tr>
                                             <th scope="row">Username</th>
                                             <td><?php echo $username; ?></td>
                                         </tr>
