@@ -70,10 +70,14 @@
                                                     <label for="">Email</label>
                                                     <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
                                                 </div>
+
+
                                                 <div class="form-group">
                                                     <label for="">Username</label>
                                                     <input type="text" name="username" class="form-control" value="<?php echo $username; ?>" disabled>
                                                 </div>
+
+
                                                 <div class="form-group">
                                                     <label for="">Password</label>
                                                     <input type="password" name="password" class="form-control" placeholder="Password">
@@ -93,29 +97,57 @@
                                                     <label for="">Address</label>
                                                     <input type="text" name="address" class="form-control" value="<?php echo $address; ?>">
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="">Role</label>
+                                                <?php if ($role == 1) { ?>
+                                                    <div class="form-group">
+                                                        <label for="">Role</label>
 
-                                                    <select name="role" id="" class="form-control" disabled>
-                                                        <option value="1" <?php if ($role == 1) {
-                                                                                echo "selected";
-                                                                            } ?>>Admin</option>
-                                                        <option value="2" <?php if ($role == 2) {
-                                                                                echo "selected";
-                                                                            } ?>>Editor</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Status</label>
-                                                    <select name="status" id="" class="form-control" disabled>
-                                                        <option value="0" <?php if ($status == 0) {
-                                                                                echo "selected";
-                                                                            } ?>>In-Active</option>
-                                                        <option value="1" <?php if ($status == 1) {
-                                                                                echo "selected";
-                                                                            } ?>>Active</option>
-                                                    </select>
-                                                </div>
+                                                        <select name="role" id="" class="form-control">
+                                                            <option value="1" <?php if ($role == 1) {
+                                                                                    echo "selected";
+                                                                                } ?>>Admin</option>
+                                                            <option value="2" <?php if ($role == 2) {
+                                                                                    echo "selected";
+                                                                                } ?>>Editor</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Status</label>
+                                                        <select name="status" id="" class="form-control">
+                                                            <option value="0" <?php if ($status == 0) {
+                                                                                    echo "selected";
+                                                                                } ?>>In-Active</option>
+                                                            <option value="1" <?php if ($status == 1) {
+                                                                                    echo "selected";
+                                                                                } ?>>Active</option>
+                                                        </select>
+                                                    </div>
+                                                <?php   } else if ($role == 2) { ?>
+                                                    <div class="form-group">
+                                                        <label for="">Role</label>
+
+                                                        <select name="role" id="" class="form-control" disabled>
+                                                            <option value="1" <?php if ($role == 1) {
+                                                                                    echo "selected";
+                                                                                } ?>>Admin</option>
+                                                            <option value="2" <?php if ($role == 2) {
+                                                                                    echo "selected";
+                                                                                } ?>>Editor</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Status</label>
+                                                        <select name="status" id="" class="form-control" disabled>
+                                                            <option value="0" <?php if ($status == 0) {
+                                                                                    echo "selected";
+                                                                                } ?>>In-Active</option>
+                                                            <option value="1" <?php if ($status == 1) {
+                                                                                    echo "selected";
+                                                                                } ?>>Active</option>
+                                                        </select>
+                                                    </div>
+                                                <?php } ?>
+
+
 
                                                 <div class="form-group">
                                                     <label for="">Profile Image</label>

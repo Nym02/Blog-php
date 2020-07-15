@@ -74,6 +74,7 @@ session_start();
                     $password = mysqli_real_escape_string($db, $_POST['password']);
 
 
+
                     $hashedPass = sha1($password);
 
 
@@ -95,6 +96,7 @@ session_start();
                         $_SESSION['status']         = $row['status'];
                         $_SESSION['image']          = $row['image'];
                         $_SESSION['join_date']      = $row['join_date'];
+                        $_SESSION['join_date']      =$row['join_date'];
 
                         if ($email == $_SESSION['email'] && $hashedPass == $_SESSION['password'] && $_SESSION['status'] == 1) {
                             header("Location: dashboard.php");

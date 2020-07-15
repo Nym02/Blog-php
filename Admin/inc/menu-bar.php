@@ -1,11 +1,3 @@
-<?php
-if (isset($_SESSION['fullname']) && isset($_SESSION['image'])) {
-    $fullname = $_SESSION['fullname'];
-    $img = $_SESSION['image'];
-}
-
-?>
-
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -13,19 +5,32 @@ if (isset($_SESSION['fullname']) && isset($_SESSION['image'])) {
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Admin</span>
     </a>
+    <?php
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="image/users/<?php echo $img; ?>" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-                <a href="profile.php" class="d-block"><?php echo $fullname; ?></a>
-            </div>
-        </div>
+    $userQuery = "SELECT * from users where id = $_SESSION[id]";
+    $userSql = mysqli_query($db, $userQuery);
 
+
+    while ($row = mysqli_fetch_array($userSql)) {
+        $id = $row['id'];
+        $image = $row['image'];
+        $fullname = $row['fullname'];
+
+
+
+    ?>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="image/users/<?php echo $image; ?>" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="profile.php" class="d-block"><?php echo $fullname; ?></a>
+                </div>
+            </div>
+        <?php } ?>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -227,6 +232,6 @@ if (isset($_SESSION['fullname']) && isset($_SESSION['image'])) {
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+        </div>
+        <!-- /.sidebar -->
 </aside>
