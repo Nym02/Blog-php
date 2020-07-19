@@ -5,13 +5,13 @@
         <!-- Row Start -->
         <div class="row">
             <div class="col-md-12">
-                <h2 class="page-title">Blog Page</h2>
+                <h2 class="page-title">Search Page</h2>
                 <!-- Page Heading Breadcrumb Start -->
                 <nav class="page-breadcrumb-item">
                     <ol>
                         <li><a href="index.html">Home <i class="fa fa-angle-double-right"></i></a></li>
                         <!-- Active Breadcrumb -->
-                        <li class="active">Blog</li>
+                        <li class="active">Search</li>
                     </ol>
                 </nav>
                 <!-- Page Heading Breadcrumb End -->
