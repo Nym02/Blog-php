@@ -34,39 +34,82 @@
         <div class="row">
             <!-- Blog Single Posts -->
             <div class="col-md-8">
+                <?php
 
-                <div class="blog-single">
-                    <!-- Blog Title -->
-                    <a href="#">
-                        <h3 class="post-title">CONSECTETUR ADIPISICING ELIT, SED DO EIUSMOD.</h3>
-                    </a>
+                if (isset($_GET['post'])) {
+                    $postID = $_GET['post'];
 
-                    <!-- Blog Categories -->
-                    <div class="single-categories">
-                        <span>Technology</span>
-                        <span>Corporate</span>
-                        <span>Tech Business</span>
-                    </div>
 
-                    <!-- Blog Thumbnail Image Start -->
-                    <div class="blog-banner">
-                        <a href="#">
-                            <img src="assets/images/blog/test.jpg">
-                        </a>
-                    </div>
-                    <!-- Blog Thumbnail Image End -->
+                    $query = "SELECT * from post where id = '$postID'";
+                    $sql = mysqli_query($db, $query);
 
-                    <!-- Blog Description Start -->
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eserunt mollit anim id labor laborumlabor laborum est.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eserunt mollit anim id labor laborumlabor laborum est.</p>
 
-                    <div class="blog-description-quote">
-                        <p><i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<i class="fa fa-quote-right"></i></p>
-                    </div>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eserunt mollit anim id labor laborumlabor laborum est.
-                    </p>
-                    <!-- Blog Description End -->
-                </div>
+
+
+
+                    while ($row = mysqli_fetch_assoc($sql)) {
+                        $post_id                        = $row['id'];
+                        $post_title                     = $row['title'];
+                        $post_description               = $row['description'];
+                        $post_image                     = $row['image'];
+                        $post_category                  = $row['category_id'];
+                        $post_title                     = $row['title'];
+                        $post_author                    = $row['author_id'];
+                        $post_status                    = $row['status'];
+                        $post_tags                      = $row['tags'];
+                        $post_post_date                 = $row['post_date'];
+
+
+
+                ?>
+                        <div class="blog-single">
+                            <!-- Blog Title -->
+
+                            <h3 class="post-title"><?php echo $post_title; ?></h3>
+
+                            <!-- Blog Categories -->
+                            <div class="single-categories">
+
+
+                                <?php
+                                $categoryQuery = "SELECT * from category where cat_id = '$post_category'";
+                                $sqlCategory    = mysqli_query($db, $categoryQuery);
+
+                                while ($row = mysqli_fetch_assoc($sqlCategory)) {
+                                    $cat_id = $row['cat_id'];
+                                    $cat_name = $row['cat_name']; ?>
+
+                                    <span><?php echo $cat_name; ?></span>
+
+
+
+                                <?php  }
+
+                                ?>
+
+                            </div>
+
+                            <!-- Blog Thumbnail Image Start -->
+                            <div class="blog-banner">
+                                <a href="#">
+                                    <img src="admin/image/post/<?php echo $post_image; ?>">
+                                </a>
+                            </div>
+                            <!-- Blog Thumbnail Image End -->
+
+                            <!-- Blog Description Start -->
+                            <p><?php echo $post_description; ?></p>
+
+                            <!-- Blog Description End -->
+                        </div>
+
+                <?php
+                    }
+                }
+                ?>
+
+
 
                 <!-- Single Comment Section Start -->
                 <div class="single-comments">

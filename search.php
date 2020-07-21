@@ -31,50 +31,115 @@
         <div class="row">
             <!-- Blog Posts Start -->
             <div class="col-md-8">
+                <?php
+                if (isset($_POST['search'])) {
+                    $search = $_POST['search'];
 
-                <!-- Single Item Blog Post Start -->
-                <div class="blog-post">
-                    <!-- Blog Banner Image -->
-                    <div class="blog-banner">
-                        <a href="#">
-                            <img src="assets/images/blog/test.jpg">
-                            <!-- Post Category Names -->
-                            <div class="blog-category-name">
-                                <h6>Technology</h6>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Blog Title and Description -->
-                    <div class="blog-description">
-                        <a href="#">
-                            <h3 class="post-title">CONSECTETUR ADIPISICING ELIT, SED DO EIUSMOD.</h3>
-                        </a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eserunt mollit anim id labor laborumlabor laborum est.</p>
-                        <!-- Blog Info, Date and Author -->
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="blog-info">
-                                    <ul>
-                                        <li><i class="fa fa-calendar"></i>7th Nov, 2018</li>
-                                        <li><i class="fa fa-user"></i>by - admin</li>
-                                        <li><i class="fa fa-heart"></i>(50)</li>
-                                    </ul>
+
+                    $sql = "SELECT * from post where title LIKE '%$search%' OR description LIKE '%$search%'";
+
+                    $query = mysqli_query($db, $sql);
+
+                    $searchResult = mysqli_num_rows($query);
+
+
+                    if ($searchResult == 0) {
+                        echo '<div class="alert alert-danger">Sorry!!! No post found.</div>';
+                    } else {
+                        while ($row = mysqli_fetch_assoc($query)) {
+                            $post_id                        = $row['id'];
+                            $post_title                     = $row['title'];
+                            $post_description               = $row['description'];
+                            $post_image                     = $row['image'];
+                            $post_category                  = $row['category_id'];
+                            $post_title                     = $row['title'];
+                            $post_author                    = $row['author_id'];
+                            $post_status                    = $row['status'];
+                            $post_tags                      = $row['tags'];
+                            $post_date                 = $row['post_date']; ?>
+
+                            <!-- Single Item Blog Post Start -->
+                            <div class="blog-post">
+                                <!-- Blog Banner Image -->
+                                <div class="blog-banner">
+                                    <a href="single.php?post=<?php echo $post_id; ?>">
+                                        <img src="admin/image/post/<?php echo $post_image; ?>">
+                                        <!-- Post Category Names -->
+                                        <div class="blog-category-name">
+                                            <?php
+                                            $categoryQuery = "SELECT * from category where cat_id = '$post_category'";
+                                            $sqlCategory    = mysqli_query($db, $categoryQuery);
+
+                                            while ($row = mysqli_fetch_assoc($sqlCategory)) {
+                                                $cat_id = $row['cat_id'];
+                                                $cat_name = $row['cat_name']; ?>
+
+                                                <h6><?php echo $cat_name; ?></h6>
+
+
+
+                                            <?php  }
+
+                                            ?>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Blog Title and Description -->
+                                <div class="blog-description">
+                                    <a href="single.php?post=<?php echo $post_id; ?>">
+                                        <h3 class="post-title"><?php echo $post_title; ?></h3>
+                                    </a>
+                                    <p><?php
+
+                                        $descriptionLen = strlen($post_description);
+                                        if ($descriptionLen > 300) {
+                                            echo substr($post_description, 0, 300) . ' ....';
+                                        } else {
+                                            echo $post_description;
+                                        }
+
+                                        ?></p>
+                                    <!-- Blog Info, Date and Author -->
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="blog-info">
+                                                <ul>
+                                                    <li><i class="fa fa-calendar"></i><?php echo $post_date ?></li>
+                                                    <li><i class="fa fa-user"></i>
+                                                        <?php
+                                                        $post_user = "SELECT * FROM users where id = '$post_author'";
+                                                        $post_user_query = mysqli_query($db, $post_user);
+
+
+                                                        while ($row = mysqli_fetch_assoc($post_user_query)) {
+                                                            $uid                    = $row['id'];
+                                                            $fullname               = $row['fullname']; ?>
+                                                            by - <?php echo $fullname; ?>
+                                                        <?php    }
+
+                                                        ?>
+
+                                                    </li>
+                                                    <li><i class="fa fa-heart"></i>(50)</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 read-more-btn">
+                                            <a href="single.php?post=<?php echo $post_id; ?>" class="btn-main">Read More <i class="fa fa-angle-double-right"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-4 read-more-btn">
-                                <button type="button" class="btn-main">Read More <i class="fa fa-angle-double-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Item Blog Post End -->
+                            <!-- Single Item Blog Post End -->
 
 
+                <?php }
+                    }
+                }
 
 
-
-
+                ?>
 
             </div>
 

@@ -37,19 +37,20 @@
 
 
 
-                    $query = "SELECT * from post where category_id = '$category_id' order by cat_id desc";
+                    $query = "SELECT * from post where category_id = '$category_id' order by id desc";
                     $sql = mysqli_query($db, $query);
+
 
                     $total_category_post = mysqli_num_rows($sql);
 
 
                     if ($total_category_post == 0) {
-                        echo '<div class="alert alert-danger">Sorry!!!! No post available at this moment.</div>';
+                        echo '<div class="alert alert-danger"><strong>Sorry!!!! No post available at this moment.</strong></div>';
                     } else {
                         while ($row = mysqli_fetch_assoc($sql)) {
                             $post_id                        = $row['id'];
                             $post_title                     = $row['title'];
-                            $post_description               = $row['post_description'];
+                            $post_description               = $row['description'];
                             $post_image                     = $row['image'];
                             $post_category                  = $row['category_id'];
                             $post_title                     = $row['title'];
@@ -63,34 +64,72 @@
                             <div class="blog-post">
                                 <!-- Blog Banner Image -->
                                 <div class="blog-banner">
-                                    <a href="#">
-                                        <img src="assets/images/blog/test.jpg">
+                                    <a href="single.php?post=<?php echo $post_id; ?>">
+                                        <img src="admin/image/post/<?php echo $post_image; ?>">
                                         <!-- Post Category Names -->
                                         <div class="blog-category-name">
-                                            <h6>Technology</h6>
+                                            <?php
+                                            $categoryQuery = "SELECT * from category where cat_id = '$post_category'";
+                                            $sqlCategory    = mysqli_query($db, $categoryQuery);
+
+                                            while ($row = mysqli_fetch_assoc($sqlCategory)) {
+                                                $cat_id = $row['cat_id'];
+                                                $cat_name = $row['cat_name']; ?>
+
+                                                <h6><?php echo $cat_name; ?></h6>
+
+
+
+                                            <?php  }
+
+                                            ?>
+
                                         </div>
                                     </a>
                                 </div>
                                 <!-- Blog Title and Description -->
                                 <div class="blog-description">
-                                    <a href="#">
+                                    <a href="single.php?post=<?php echo $post_id; ?>">
                                         <h3 class="post-title"><?php echo $post_title; ?></h3>
                                     </a>
-                                    <p><?php echo $post_description; ?></p>
+                                    <p><?php
+
+                                        $descriptionLen = strlen($post_description);
+                                        if ($descriptionLen > 300) {
+                                            echo substr($post_description, 0, 300) . ' ....';
+                                        } else {
+                                            echo $post_description;
+                                        }
+
+                                        ?></p>
                                     <!-- Blog Info, Date and Author -->
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="blog-info">
                                                 <ul>
                                                     <li><i class="fa fa-calendar"></i>7th Nov, 2018</li>
-                                                    <li><i class="fa fa-user"></i>by - admin</li>
+                                                    <li><i class="fa fa-user"></i>
+                                                        <?php
+                                                        $post_user = "SELECT * FROM users where id = '$post_author'";
+                                                        $post_user_query = mysqli_query($db, $post_user);
+
+
+                                                        while ($row = mysqli_fetch_assoc($post_user_query)) {
+                                                            $uid                    = $row['id'];
+                                                            $fullname               = $row['fullname']; ?>
+                                                            by - <?php echo $fullname; ?>
+                                                        <?php    }
+
+                                                        ?>
+
+                                                    </li>
                                                     <li><i class="fa fa-heart"></i>(50)</li>
                                                 </ul>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 read-more-btn">
-                                            <button type="button" class="btn-main">Read More <i class="fa fa-angle-double-right"></i></button>
+                                            <a href="single.php?post=<?php echo $post_id; ?>" class="btn-main">Read More <i class="fa fa-angle-double-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
