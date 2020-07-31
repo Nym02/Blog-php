@@ -1,6 +1,8 @@
 <?php
 include("inc/db.inc.php");
-ob_start(); ?>
+ob_start();
+session_start();
+?>
 
 
 <!doctype html>
@@ -79,6 +81,23 @@ ob_start(); ?>
                                         <a class="nav-link" href="category_temp.php?id=<?php echo $cat_id; ?>"><?php echo $cat_name; ?></a>
                                     </li>
                                 <?php } ?>
+
+
+
+                                <?php
+
+                                if (!empty($_SESSION['id'])) { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="logout.php">Logout</a>
+                                    </li>
+                                <?php } else { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#login">Login</a>
+                                    </li>
+                                <?php    }
+
+
+                                ?>
 
                             </ul>
 

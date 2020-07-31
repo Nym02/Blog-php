@@ -274,5 +274,20 @@
          <!-- Meta Tag List End -->
      </div>
 
+     <div class="widget" id="login">
+         <h4>Login</h4>
+         <div class="title-border"></div>
+         <form action="login.php" method="POST">
+             <div class="form-group">
+                 <input type="text" class="form-control" name="email" placeholder="Email">
+             </div>
+             <div class="form-group">
+                 <input type="password" class="form-control" name="password" placeholder="Password">
+             </div>
+             <div class="form-group">
+                 <input type="submit" class="btn-main" name="login" value="Login">
+             </div>
+         </form>
+     </div>
  </div>
  <!-- Right Sidebar End -->

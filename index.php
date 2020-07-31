@@ -155,14 +155,10 @@
 
             <?php
 
-            include("inc/sidebar.php");
+            include "inc/sidebar.php";
             ?>
         </div>
     </div>
 </section>
 <!-- ::::::::::: Blog With Right Sidebar End ::::::::: -->
-
-
-
-
 <?php include "inc/footer.php"; ?>
