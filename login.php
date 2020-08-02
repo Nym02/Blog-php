@@ -4,6 +4,9 @@ include "inc/db.inc.php";
 session_start();
 ob_start();
 
+
+
+
 if (isset($_POST['login'])) {
     $uemail             = mysqli_real_escape_string($db, $_POST['email']);
     $upassword          = mysqli_real_escape_string($db, $_POST['password']);
@@ -21,7 +24,7 @@ if (isset($_POST['login'])) {
 
     while ($row = mysqli_fetch_array($loginUserSql)) {
         $_SESSION['id']             = $row['sub_id'];
-        $_SESSION['fullname']       = $row['sub_name'];
+        $_SESSION['fullnamee']       = $row['sub_name'];
         $_SESSION['email']          = $row['sub_email'];
         $_SESSION['password']       = $row['sub_password'];
 

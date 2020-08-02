@@ -180,69 +180,44 @@
          <div class="title-border"></div>
          <div class="recent-comments">
 
-             <!-- Recent Comments Item Start -->
-             <div class="recent-comments-item">
-                 <div class="row">
-                     <!-- Comments Thumbnails -->
-                     <div class="col-md-4">
-                         <i class="fa fa-comments-o"></i>
-                     </div>
-                     <!-- Comments Content -->
-                     <div class="col-md-8 no-padding">
-                         <h5>admin on blog posts</h5>
-                         <!-- Comments Date -->
-                         <ul>
-                             <li>
-                                 <i class="fa fa-clock-o"></i>Dec 15, 2018
-                             </li>
-                         </ul>
+             <?php
+                $comment        = "SELECT * FROM comments order by cmnt_id desc limit 4";
+                $cmntQuery      = mysqli_query($db, $comment);
+
+
+                while ($row = mysqli_fetch_assoc($cmntQuery)) {
+                    $cmnt_id                = $row['cmnt_id'];
+                    $fullname               = $row['fullname'];
+                    $cmnt_des               = $row['cmnt_description'];
+                    $cmntPost_id            = $row['post_id'];
+                    $cmnt_status            = $row['cmnt_status'];
+                    $cmnt_date              = $row['cmnt_date']; ?>
+
+
+                 <!-- Recent Comments Item Start -->
+                 <div class="recent-comments-item">
+                     <div class="row">
+                         <!-- Comments Thumbnails -->
+                         <div class="col-md-4">
+                             <i class="fa fa-comments-o"></i>
+                         </div>
+                         <!-- Comments Content -->
+                         <div class="col-md-8 no-padding">
+                             <h5><?php echo $cmnt_des; ?></h5>
+                             <!-- Comments Date -->
+                             <ul>
+                                 <li>
+                                     <i class="fa fa-clock-o"></i><?php echo $cmnt_date; ?>
+                                 </li>
+                             </ul>
+                         </div>
                      </div>
                  </div>
-             </div>
-             <!-- Recent Comments Item End -->
+                 <!-- Recent Comments Item End -->
+             <?php
+                }
 
-             <!-- Recent Comments Item Start -->
-             <div class="recent-comments-item">
-                 <div class="row">
-                     <!-- Comments Thumbnails -->
-                     <div class="col-md-4">
-                         <i class="fa fa-comments-o"></i>
-                     </div>
-                     <!-- Comments Content -->
-                     <div class="col-md-8 no-padding">
-                         <h5>admin on blog posts</h5>
-                         <!-- Comments Date -->
-                         <ul>
-                             <li>
-                                 <i class="fa fa-clock-o"></i>Dec 15, 2018
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-             </div>
-             <!-- Recent Comments Item End -->
-
-             <!-- Recent Comments Item Start -->
-             <div class="recent-comments-item">
-                 <div class="row">
-                     <!-- Comments Thumbnails -->
-                     <div class="col-md-4">
-                         <i class="fa fa-comments-o"></i>
-                     </div>
-                     <!-- Comments Content -->
-                     <div class="col-md-8 no-padding">
-                         <h5>admin on blog posts</h5>
-                         <!-- Comments Date -->
-                         <ul>
-                             <li>
-                                 <i class="fa fa-clock-o"></i>Dec 15, 2018
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-             </div>
-             <!-- Recent Comments Item End -->
-
+                ?>
          </div>
      </div>
 
@@ -273,21 +248,27 @@
          </div>
          <!-- Meta Tag List End -->
      </div>
+     <?php
+        if (empty($_SESSION['id'])) { ?>
+         <div class="widget" id="login">
+             <h4>Login</h4>
+             <div class="title-border"></div>
+             <form action="login.php" method="POST">
+                 <div class="form-group">
+                     <input type="text" class="form-control" name="email" placeholder="Email">
+                 </div>
+                 <div class="form-group">
+                     <input type="password" class="form-control" name="password" placeholder="Password">
+                 </div>
+                 <div class="form-group">
+                     <input type="submit" class="btn-main" name="login" value="Login">
+                 </div>
+             </form>
+         </div>
 
-     <div class="widget" id="login">
-         <h4>Login</h4>
-         <div class="title-border"></div>
-         <form action="login.php" method="POST">
-             <div class="form-group">
-                 <input type="text" class="form-control" name="email" placeholder="Email">
-             </div>
-             <div class="form-group">
-                 <input type="password" class="form-control" name="password" placeholder="Password">
-             </div>
-             <div class="form-group">
-                 <input type="submit" class="btn-main" name="login" value="Login">
-             </div>
-         </form>
-     </div>
+     <?php    }   ?>
+
+
+
  </div>
  <!-- Right Sidebar End -->

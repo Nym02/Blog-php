@@ -108,7 +108,65 @@
                     }
                 }
                 ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Post New Comment Section Start -->
+                        <div class="post-comments">
+                            <h4>Post Your Comments</h4>
+                            <div class="title-border"></div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
 
+                            <?php
+                            if (!empty($_SESSION['email'])) { ?>
+                                <!-- Form Start -->
+                                <form action="" method="POST" class="contact-form">
+
+
+                                    <!-- Right Side Start -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <!-- Comments Textarea Field -->
+                                            <div class="form-group">
+                                                <textarea name="comments" class="form-input" placeholder="Your Comments Here..."></textarea>
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </div>
+                                            <!-- Post Comment Button -->
+                                            <button type="submit" name="addComments" class="btn-main"><i class="fa fa-paper-plane-o"></i> Post Your Comments</button>
+                                        </div>
+                                    </div>
+                                    <!-- Right Side End -->
+                                </form>
+                                <!-- Form End -->
+                            <?php   } else {
+
+                                echo '<a href="#login" class="alert alert-info" >Login to post comments.</a>';
+                            }
+
+                            if (isset($_POST['addComments'])) {
+                                $fullname               = $_SESSION['fullnamee'];
+                                $comment                = $_POST['comments'];
+                                $postID                = $post_id;
+
+
+                                $sql        = "INSERT INTO comments(fullname, cmnt_description,	post_id,	cmnt_status	,cmnt_date	) VALUES('$fullname','$comment','$postID','1', now())";
+                                $query      = mysqli_query($db, $sql);
+
+                                if ($query) {
+                                    header("Location: single.php?post=" . $post_id);
+                                } else {
+                                    die("Error while posting comment" . mysqli_error($db));
+                                }
+                            }
+
+
+                            ?>
+
+
+                        </div>
+                        <!-- Post New Comment Section End -->
+                    </div>
+                </div>
 
 
                 <!-- Single Comment Section Start -->
@@ -116,140 +174,77 @@
                     <!-- Comment Heading Start -->
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>All Latest Comments (3)</h4>
+                            <?php
+                            $countCmntSql       = "SELECT * FROM comments where post_id = '$post_id'  AND cmnt_status = 1 order by cmnt_id desc";
+                            $countCmntQuery     = mysqli_query($db, $countCmntSql);
+                            $totalCmnt          = mysqli_num_rows($countCmntQuery);
+
+
+                            ?>
+
+                            <h4>All Latest Comments (<?php echo $totalCmnt; ?>)</h4>
                             <div class="title-border"></div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
                         </div>
                     </div>
                     <!-- Comment Heading End -->
 
-                    <!-- Single Comment Post Start -->
-                    <div class="row each-comments">
-                        <div class="col-md-2">
-                            <!-- Commented Person Thumbnail -->
-                            <div class="comments-person">
-                                <img src="assets/images/corporate-team/team-1.jpg">
-                            </div>
-                        </div>
 
-                        <div class="col-md-10 no-padding">
-                            <!-- Comment Box Start -->
-                            <div class="comment-box">
-                                <div class="comment-box-header">
-                                    <ul>
-                                        <li class="post-by-name">Someone Special</li>
-                                        <li class="post-by-hour">20 Hours Ago</li>
-                                    </ul>
+                    <?php
+
+                    if ($totalCmnt == 0) {
+                        echo '<div class="alert alert-warning">No Comments found yet.</div>';
+                    } else {
+
+
+
+                        while ($row = mysqli_fetch_assoc($countCmntQuery)) {
+                            $cmnt_id                = $row['cmnt_id'];
+                            $fullname               = $row['fullname'];
+                            $cmnt_des               = $row['cmnt_description'];
+                            $cmntPost_id            = $row['post_id'];
+                            $cmnt_status            = $row['cmnt_status'];
+                            $cmnt_date              = $row['cmnt_date']; ?>
+
+                            <!-- Single Comment Post Start -->
+                            <div class="row each-comments">
+                                <div class="col-md-2">
+                                    <!-- Commented Person Thumbnail -->
+                                    <div class="comments-person">
+                                        <img src="assets/images/corporate-team/team-1.jpg">
+                                    </div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-                            <!-- Comment Box End -->
-                        </div>
-                    </div>
-                    <!-- Single Comment Post End -->
 
-
-                    <!-- Comment Reply Post Start -->
-                    <div class="row each-comments">
-                        <div class="col-md-2 offset-md-2">
-                            <!-- Commented Person Thumbnail -->
-                            <div class="comments-person">
-                                <img src="assets/images/corporate-team/team-2.jpg">
-                            </div>
-                        </div>
-
-                        <div class="col-md-8 no-padding">
-                            <!-- Comment Box Start -->
-                            <div class="comment-box">
-                                <div class="comment-box-header">
-                                    <ul>
-                                        <li class="post-by-name">Someone Special</li>
-                                        <li class="post-by-hour">20 Hours Ago</li>
-                                    </ul>
+                                <div class="col-md-10 no-padding">
+                                    <!-- Comment Box Start -->
+                                    <div class="comment-box">
+                                        <div class="comment-box-header">
+                                            <ul>
+                                                <li class="post-by-name"><?php echo $fullname; ?></li>
+                                                <li class="post-by-hour"><?php echo $cmnt_date; ?></li>
+                                                <li class="post-by-hour">20 Hours Ago</li>
+                                            </ul>
+                                        </div>
+                                        <p><?php echo $cmnt_des; ?></p>
+                                    </div>
+                                    <!-- Comment Box End -->
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                             </div>
-                            <!-- Comment Box Start -->
-                        </div>
-                    </div>
-                    <!-- Comment Reply Post End -->
+                            <!-- Single Comment Post End -->
+                    <?php  }
+                    }
 
-                    <!-- Single Comment Post Start -->
-                    <div class="row each-comments">
-                        <div class="col-md-2">
-                            <!-- Commented Person Thumbnail -->
-                            <div class="comments-person">
-                                <img src="assets/images/corporate-team/team-1.jpg">
-                            </div>
-                        </div>
+                    ?>
 
-                        <div class="col-md-10 no-padding">
-                            <!-- Comment Box Start -->
-                            <div class="comment-box">
-                                <div class="comment-box-header">
-                                    <ul>
-                                        <li class="post-by-name">Someone Special</li>
-                                        <li class="post-by-hour">20 Hours Ago</li>
-                                    </ul>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-                            <!-- Comment Box Start -->
-                        </div>
-                    </div>
-                    <!-- Single Comment Post End -->
+
+
+
+
                 </div>
                 <!-- Single Comment Section End -->
 
 
-                <!-- Post New Comment Section Start -->
-                <div class="post-comments">
-                    <h4>Post Your Comments</h4>
-                    <div class="title-border"></div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                    <!-- Form Start -->
-                    <form action="" method="" class="contact-form">
-                        <!-- Left Side Start -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!-- First Name Input Field -->
-                                <div class="form-group">
-                                    <input type="text" name="user-name" placeholder="Your Name" class="form-input" autocomplete="off" required="required">
-                                    <i class="fa fa-user-o"></i>
-                                </div>
-                            </div>
-                            <!-- Email Address Input Field -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" name="email" placeholder="Email Address" class="form-input" autocomplete="off" required="required">
-                                    <i class="fa fa-envelope-o"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Left Side End -->
 
-                        <!-- Right Side Start -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Subject Input Field -->
-                                <div class="form-group">
-                                    <input type="text" name="subject" placeholder="Subject" class="form-input" autocomplete="off" required="required">
-                                    <i class="fa fa-diamond"></i>
-                                </div>
-                                <!-- Comments Textarea Field -->
-                                <div class="form-group">
-                                    <textarea name="comments" class="form-input" placeholder="Your Comments Here..."></textarea>
-                                    <i class="fa fa-pencil-square-o"></i>
-                                </div>
-                                <!-- Post Comment Button -->
-                                <button type="submit" class="btn-main"><i class="fa fa-paper-plane-o"></i> Post Your Comments</button>
-                            </div>
-                        </div>
-                        <!-- Right Side End -->
-                    </form>
-                    <!-- Form End -->
-                </div>
-                <!-- Post New Comment Section End -->
             </div>
 
 
